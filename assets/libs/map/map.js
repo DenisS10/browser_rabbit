@@ -315,23 +315,16 @@ app.globalMethods = {
     webStompOnMessageArrived: function webStompOnMessageArrived(webStompMessage) {
         console.log(webStompMessage);
         var message = JSON.parse(webStompMessage.body);
-        if (message && message.reportUID && message.status === 'report_execution_finished') {
-            switch (message.reportUID) {
-                case app.driverTab.properties.tachoReportCurrentDataUID:
-                    app.driverTab.methods.receiveTachoReportCurrentData(message.report_data);
-                    break;
-                case app.driverTab.properties.tachoReportIntervalDataUID:
-                    app.driverTab.methods.receiveTachoReportIntervalData(message.report_data);
-                    break;
-            }
+        if (message) {
+
         }
     },
 
 };
 app.globalVariables = {
     webStompClient: null,
-    webStompUrl: 'ws://95.163.120.189:15674/ws',
-    webStompLogin: 'browser-session',
-    webStompPassword: 'pgp#rP#kTgk]{U4d',
+    webStompUrl: 'ws://192.168.1.123:15674/ws',
+    webStompLogin: 'user',
+    webStompPassword: '32dg6fg2v1e65gr',
 };
 
