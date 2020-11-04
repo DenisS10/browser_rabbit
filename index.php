@@ -2,13 +2,14 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
-    <title>SMS INFORMER 2.0</title>
+    <title>Browser RabbitMQ</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
     <!-- CSS -->
     <link href="assets/libs/reset/reset.css" rel="stylesheet">
     <link href="assets/css/main.css" rel="stylesheet">
     <link href="assets/css/media.css" rel="stylesheet">
+    <link href="assets/libs/lib/leaflet/leaflet.css" rel="stylesheet">
 </head>
 
 
@@ -17,14 +18,14 @@
 <body>
 
 <?php
-define("BATTERY", 1);   //
-define("GPS_LATITUDE", 3);   //
-define("GPS_LONGITUDE", 4);  //
-define("GPS_SSHC", 5);       //  speed (high byte),  satellites, height, course (least significant byte)
-define("GSM_LACCID", 7);     // "LAC CID"	"Local Area Code -  (first 2 B) 0xFF01
-define("GSM_OPER", 8);       // "Signal level GSM (old. Byte)
-define("DOP_PARAM", 152);    // "152, время младшее(сек), время старшее(сек),температура(знаковое, Градусы, от -128 до 127), HDOP(в 0.1)
-$dif_time=3*60*60;
+//define("BATTERY", 1);   //
+//define("GPS_LATITUDE", 3);   //
+//define("GPS_LONGITUDE", 4);  //
+//define("GPS_SSHC", 5);       //  speed (high byte),  satellites, height, course (least significant byte)
+//define("GSM_LACCID", 7);     // "LAC CID"	"Local Area Code -  (first 2 B) 0xFF01
+//define("GSM_OPER", 8);       // "Signal level GSM (old. Byte)
+//define("DOP_PARAM", 152);    // "152, время младшее(сек), время старшее(сек),температура(знаковое, Градусы, от -128 до 127), HDOP(в 0.1)
+//$dif_time=3*60*60;
 // test.duotec.ru/?013C00C361AA5A03848B5E420455D51442050015670097EE000000075FD69B130802FA00190900D0C464010F11E13A5B8D013F015C0000BC015D0000F603FA320100006D
 // 013C00FD5AAA5A03958B5E42048FD51442050015770097DB000000075FD69B130802FA00180900D0C564010F11EA3A5B070009015C00009C005D00008C00FA32010000A6
 //echo getenv("REMOTE_ADDR");     printf ("<br>\r\n");
@@ -176,7 +177,7 @@ function do_post_request($url, $data, $optional_headers = null)
     if ($response == false)
     {
         // throw new Exception("Problem reading data from $url, $php_errormsg");
-        printf ("Problem reading data from $url, $php_errormsg");
+//        printf ("Problem reading data from $url, $php_errormsg");
         $response=0;
     }
     return trim($response);
@@ -258,59 +259,18 @@ if ($GLAC && $GCID && $GMNC && $GMCC )
 
 
 ?>
-<script src="http://api-maps.yandex.ru/2.1/?lang=ru_RU" type="text/javascript"></script>
-
-<?php if (($m_t_f[GPS_LATITUDE]==1)&&($m_t_f[GPS_LONGITUDE]==1)): ?>
-
-    <script type="text/javascript">
-        ymaps.ready(init);
-
-        function init()
-        {
-            var myMap_gps;
-            myMap_gps = new ymaps.Map("map_gps",
-                {
-                    center: [<?= $LATI ?>, <?= $LONG ?>],
-                    zoom: 16,
-                    controls: []
-                });
-
-            myMap_gps.controls.add("zoomControl",
-                {
-                    position: {top: 15, left: 15}
-                });
-
-            var myPlacemark_gps = new ymaps.Placemark([<?= $LATI ?>, <?= $LONG ?>]);
-
-            myMap_gps.geoObjects.add(myPlacemark_gps);
-
-
-        }
-    </script>
-<?php endif; ?>
-<script type="text/javascript">
-    ymaps.ready(init);
-    function init()
-    {
-        var myMap;
-        myMap = new ymaps.Map("map", {
-            center: [<?= LATI1 ?>, <?= LONG1 ?>],
-            zoom: 14,
-            controls: []
-        });
-
-        myMap.controls.add("zoomControl", {
-            position: {top: 15, left: 15}
-        });
-
-        //var myPlacemark = new ymaps.Placemark([".LATI1.",".LONG1."] , {},{});
-        var myPlacemark = new ymaps.Circle([[<?= LATI1 ?>, <?= LONG1 ?>], 15000/<?= $GSML ?>]);
-        myMap.geoObjects.add(myPlacemark);
-        //var myPlacemark2 = new ymaps.Circle([[".NLATI.",".NLONG."], 5000/$GSML]);
-        //myMap.geoObjects.add(myPlacemark2);
-    }
-
-</script>
+<script src="assets/libs/jquery/jquery-3.4.1.min.js" type="text/javascript"></script>
+<script src="assets/libs/lib/leaflet/leaflet.js" type="text/javascript"></script>
+<script src="assets/libs/lib/leaflet-plugins-3.0.3/layer/Layer.Deferred.js"></script>
+<script src="assets/libs/lib/leaflet-plugins-3.0.3/layer/vector/KML.js"></script>
+<script src="assets/libs/lib/tileLayers/WebGis.js" type="text/javascript"></script>
+<script src="assets/libs/lib/tileLayers/VirtualEarth.js" type="text/javascript"></script>
+<script src="assets/libs/lib/tileLayers/WikiMapia.js" type="text/javascript"></script>
+<script src="assets/libs/lib/Leaflet.markercluster-1.4.1/dist/leaflet.markercluster.js" type="text/javascript"></script>
+<link rel="stylesheet" href="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.css" />
+<script src="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.js"></script>
+<script type="text/javascript" src="node_modules/webstomp-client/dist/webstomp.min.js"></script>
+<script src="assets/libs/map/map.js" type="text/javascript"></script>
 
 <?php
 //}
@@ -355,14 +315,14 @@ HTTP_USER_AGENT Ц информаци¤ о браузере, который ис
         </div>
     </section>
 
-    <section id="gsm_section" class="global_section">
-        <div class="header_box">
-            <h2>Position by GSM</h2>
-        </div>
-        <div class="body_box">
-            <div id="map"></div>
-        </div>
-    </section>
+<!--    <section id="gsm_section" class="global_section">-->
+<!--        <div class="header_box">-->
+<!--            <h2>Position by GSM</h2>-->
+<!--        </div>-->
+<!--        <div class="body_box">-->
+<!--            <div id="map"></div>-->
+<!--        </div>-->
+<!--    </section>-->
 
     <section id="info_section" class="global_section">
         <div class="header_box">

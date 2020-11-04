@@ -9,18 +9,22 @@ body {
     text-align: left; }
 
 #global_wrap {
-  display: flex;
+  display: grid;
+  grid-template-rows: 1fr;
   width: 100%;
+  grid-gap: 20px;
+  grid-template-columns: 1fr 1fr;
   min-height: 100%;
   height: max-content;
   background: red;
   padding: 60px;
   box-sizing: border-box;
-  background-image: radial-gradient(50% 100%, #104492 50%, #0F3467 100%); }
+  background-image: radial-gradient(50% 100%, #104492 50%, #0F3467 100%);
+}
   #global_wrap .global_section {
     display: flex;
     flex-direction: column;
-    width: calc(100%/3);
+    width: 100%;
     margin-right: 40px;
     box-sizing: border-box;
     /* Rectangle 2: */

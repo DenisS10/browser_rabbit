@@ -1,0 +1,6 @@
+{
+  "require": {
+    "php-amqplib/php-amqplib": "2.8.1",
+    "npm-asset/webstomp-client": "^1.2"
+  }
+}
