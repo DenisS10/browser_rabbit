@@ -270,6 +270,7 @@ if ($GLAC && $GCID && $GMNC && $GMCC )
 <link rel="stylesheet" href="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.css" />
 <script src="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.js"></script>
 <script type="text/javascript" src="node_modules/webstomp-client/dist/webstomp.min.js"></script>
+<script src="assets/libs/app.js" type="text/javascript"></script>
 <script src="assets/libs/map/map.js" type="text/javascript"></script>
 
 <?php
@@ -326,92 +327,10 @@ HTTP_USER_AGENT Ц информаци¤ о браузере, который ис
 
     <section id="info_section" class="global_section">
         <div class="header_box">
-            <h2>Device information</h2>
+            <h2>Message information</h2>
         </div>
         <div class="body_box">
-            <table>
-                <tbody>
 
-                <?php
-                echo("<tr>");
-                printf("<th>Date & Time:</th>");
-
-                list  ($dd,$mm,$yy, $h, $m, $s) = unixtotime($time_packet+$dif_time);
-                printf("<td>%02d-%02d-%02d at %02d:%02d:%02d</td>",  $dd, $mm, $yy, $h, $m, $s);
-                echo("</tr>");
-                if ($m_t_f[GPS_SSHC]==1)
-                {
-                    echo("<tr>");
-                    printf("<th>Speed:</th>");
-                    printf("<td>%d km/h</td>", ($SSHC>>24)*1,6);
-                    echo("</tr>");
-
-                    echo("<tr>");
-                    printf("<th>Height:</th>");
-                    printf("<td>%d m</td>", (10*((($SSHC<<16)>>24) & 0xFF)));
-                    echo("</tr>");
-
-                    echo("<tr>");
-                    printf("<th>Sattelite:</th>");
-                    printf("<td>%d</td>", (($SSHC<<8)>>24));
-                    echo("</tr>");
-                }
-
-
-
-                echo("<tr>");
-                printf("<th>GSM level:</th>");
-                printf("<td>%d [%d %%]</td>", $GSML, 100*($GSML-6)/25);
-                echo("</tr>");
-
-                echo("<tr>");
-                printf("<th>GSM operator:</th>");
-                switch($GMNC)
-                {
-                    case 1: $operator_name="MTS RUS"; break;
-                    case 2: $operator_name="MegaFon RUS"; break;
-                    case 99: $operator_name="BeeLine RUS"; break;
-                    default: $operator_name="Unknown"; break;
-                }
-                //$operator_name=$GMNC==1?"MTS RUS":$GMNC==2?"MegaFon RUS"$GMNC==99?"BeeLine Rus":"Unknown";
-                printf("<td>%s</td>",  $operator_name);
-                echo("</tr>");
-
-                echo("<tr>");
-                printf("<th>Internal power:</th>");
-                printf("<td>%d mV</td>", $BATTERY);
-                echo("</tr>");
-                echo("<tr>");
-                printf("<th>External power:</th>");
-                printf("<td>%d mV</td>", $INTVOLT);
-                echo("</tr>");
-
-
-                if ($m_t_f[DOP_PARAM]==1)
-                {
-                    if ($m_t_f[GPS_LATITUDE]==1)
-                    {
-                        echo("<tr>");
-                        printf("<th>GPS HDOP:</th>");
-                        printf("<td>%.1f</td>", $DP_HDOP/10);
-                        echo("</tr>");
-                    }
-                    echo("<tr>");
-                    printf("<th>Temperature:</th>");
-                    printf("<td>%d C</td>",  $DP_TEMP);
-                    echo("</tr>");
-
-                    echo("<tr>");
-                    printf("<th>Session time:</th>");
-                    printf("<td>%d sec</td>",  $DP_TIME);
-                    echo("</tr>");
-                }
-
-                ?>
-
-
-                </tbody>
-            </table>
         </div>
     </section>
 </section>

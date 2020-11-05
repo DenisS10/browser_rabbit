@@ -4,10 +4,7 @@ $(function () {
     initLeafletMaps();
     app.globalMethods.initWebStomp();
 });
-var app = {
-    globalMethods: {},
-    globalVariables: {},
-};
+
 var MapGlobal = {};
 MapGlobal.centerMap = [53.902527, 27.554153];
 // MapGlobal.map = L.map('map_div', {zoomControl: false}).setView(MapGlobal.centerMap, 13);
@@ -271,60 +268,42 @@ var initLeafletMaps = function initializeLeafletMaps() {
     osm.addTo(MapGlobal.map); // default map
     L.control.layers(baseLayers).addTo(MapGlobal.map);
 };
-app.globalMethods = {
-    generateUUID: function generateUUID() {
-        var d = new Date().getTime();//Timestamp
-        var d2 = (performance && performance.now && (performance.now()*1000)) || 0;//Time in microseconds since page-load or 0 if unsupported
-        return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random() * 16;//random number between 0 and 16
-            if(d > 0){//Use timestamp until depleted
-                r = (d + r)%16 | 0;
-                d = Math.floor(d/16);
-            } else {//Use microseconds since page-load if supported
-                r = (d2 + r)%16 | 0;
-                d2 = Math.floor(d2/16);
-            }
-            return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-        });
-    },
-    initWebStomp: function initWebStomp() {
-        app.globalVariables.tabUID = app.globalMethods.generateUUID();
-        $.ajax({
-            url: '/prepare-queues.php',
-            type: 'post',
-            data: {
-                tabUID: app.globalVariables.tabUID
-            },
-            success: function (data) {
-                debugger;
-                if (data.queueName) {
-                    debugger;
-                    app.globalVariables.webStompClient = webstomp.client(app.globalVariables.webStompUrl);
-                    app.globalVariables.webStompClient.debug = app.globalMethods.webStompOnDebug;
-                    app.globalVariables.webStompClient.connect(app.globalVariables.webStompLogin, app.globalVariables.webStompPassword, function () {
-                        app.globalVariables.webStompClient.subscribe('/amq/queue/' + data.queueName, app.globalMethods.webStompOnMessageArrived);
-                    });
-                }
-            }
-        });
+/*
 
-    },
-    webStompOnDebug: function webStompOnDebug(data) {
-        return;
-    },
-    webStompOnMessageArrived: function webStompOnMessageArrived(webStompMessage) {
-        console.log(webStompMessage);
-        var message = JSON.parse(webStompMessage.body);
-        if (message) {
-
-        }
-    },
-
+{
+  "imei": "867857034733324",
+  "msg": {
+    "tm_recv": 1604566402,
+    "height": 140,
+    "course": 20,
+    "lat": 53.31398773,
+    "speed": 18,
+    "sats": 15,
+    "lon": 34.28489685,
+    "unit_id": "867857034733324",
+    "unit_type": "arnavi_v4",
+    "tm": 1604566398,
+    "params": "OUT0:0;OUT1:0;OUT2:0;OUT3:0;IN4:0;IN5:0;IN6:0;move:1;IN0:0;IN1:0;IN2:1;IN3:0;BU:13823;sim_st:1;GSM:3;st0:0;st1:0;st2:1;rbU:2;sim:0;IN7:0;hdop:0.71;RBU:4057;GPS:3;bU:13800;"
+  },
+  "type": "messages",
+  "sendTm": 1604566402,
+  "unitId": 124617
+}
+*/
+MapGlobal.createMarker = function (rabbitMsg) {
+    if (this.marker) {
+        this.marker.removeFrom(MapGlobal.map);
+    }
+    var icon_path = '/assets/img/ufo.png';
+    var icon = L.icon({iconUrl: icon_path, iconSize: [32, 32], iconAnchor: [12, 12]});
+    this.marker = L.marker([rabbitMsg.msg.lat, rabbitMsg.msg.lon], {
+        icon: icon,
+        title: 'Car'
+    });
+    this.marker.addTo(MapGlobal.markerGroup);
+    MapGlobal.map.setView([rabbitMsg.msg.lat, rabbitMsg.msg.lon]);
 };
-app.globalVariables = {
-    webStompClient: null,
-    webStompUrl: 'ws://192.168.1.123:15674/ws',
-    webStompLogin: 'user',
-    webStompPassword: '32dg6fg2v1e65gr',
-};
+
+
+
 

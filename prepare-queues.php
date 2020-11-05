@@ -12,7 +12,7 @@ function actionPrepareQueues()
 
     $rabbitMQ = new RabbitMQ();
     $exchangeName = 'testing.hw.messages';
-    $queueName = $exchangeName;
+    $queueName = $exchangeName; // . '.' . $_POST['tabUID'];
     $result = $rabbitMQ->createQueueAndBind(
         $queueName,
         [$exchangeName => $queueName],
