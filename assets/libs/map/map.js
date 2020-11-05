@@ -2,6 +2,7 @@
 
 $(function () {
     initLeafletMaps();
+    app.globalMethods.initUnitData();
     app.globalMethods.initWebStomp();
 });
 
@@ -290,18 +291,18 @@ var initLeafletMaps = function initializeLeafletMaps() {
   "unitId": 124617
 }
 */
-MapGlobal.createMarker = function (rabbitMsg) {
+MapGlobal.createMarker = function (lat, lon) {
     if (this.marker) {
         this.marker.removeFrom(MapGlobal.map);
     }
     var icon_path = '/assets/img/ufo.png';
     var icon = L.icon({iconUrl: icon_path, iconSize: [32, 32], iconAnchor: [12, 12]});
-    this.marker = L.marker([rabbitMsg.msg.lat, rabbitMsg.msg.lon], {
+    this.marker = L.marker([lat, lon], {
         icon: icon,
         title: 'Car'
     });
     this.marker.addTo(MapGlobal.markerGroup);
-    MapGlobal.map.setView([rabbitMsg.msg.lat, rabbitMsg.msg.lon]);
+    MapGlobal.map.setView([lat, lon]);
 };
 
 

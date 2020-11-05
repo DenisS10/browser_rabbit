@@ -42,18 +42,39 @@ app.globalMethods = {
         return;
     },
     webStompOnMessageArrived: function webStompOnMessageArrived(webStompMessage) {
-        console.log(webStompMessage);
         var message = JSON.parse(webStompMessage.body);
         if (message) {
-            MapGlobal.createMarker(message);
+            MapGlobal.createMarker(message.msg.lat, message.msg.lon);
             app.globalMethods.updateMessageInformationTable(message);
-            console.log(message);
-
         }
     },
     updateMessageInformationTable: function (msg) {
-        var bodyBox = $('#info_section').find('.body_box');
-        bodyBox.html('<pre>' + JSON.stringify(msg, undefined, 4) + '</pre>');
+        var rabbitMsgBox = $('#info_section').find('.rabbit-msg-box');
+        rabbitMsgBox.html('<h2>RabbitMQ Message</h2>' + '<pre>' + JSON.stringify(msg, undefined, 4) + '</pre>');
+debugger;
+        app.globalMethods.updateHumanReadingTable(msg.msg.tm, msg.msg.course, msg.msg.speed, msg.msg.sats, msg.imei, msg.msg.lat, msg.msg.lon);
+    },
+    initUnitData: function () {
+        $.ajax({
+            url: '/load-unit-data.php', //get last_msg_unit row
+            type: 'get',
+            success: function (lmsg) {
+                MapGlobal.createMarker(lmsg.lat, lmsg.lon);
+                app.globalMethods.updateHumanReadingTable(lmsg.time, lmsg.course, lmsg.speed, lmsg.sats, lmsg.unit_id, lmsg.lat, lmsg.lon);
+            }
+        });
+    },
+    updateHumanReadingTable: function (time, course, speed, sats, imei, lat, lon) {
+        var $table = $('#additional_info');
+        $table.find('.datetime').find('td')
+            .html(new Date(parseInt(time.toString() + '000')).toLocaleString("ru-RU")
+                + ' ' + Intl.DateTimeFormat().resolvedOptions().timeZone
+            );
+        $table.find('.course').find('td').html(course);
+        $table.find('.speed').find('td').html(speed);
+        $table.find('.sats').find('td').html(sats);
+        $table.find('.imei').find('td').html(imei);
+        $table.find('.coords').find('td').html(lat + ', ' + lon);
     }
 };
 app.globalVariables = {

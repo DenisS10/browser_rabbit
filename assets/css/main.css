@@ -11,16 +11,15 @@ body {
 #global_wrap {
   display: grid;
   grid-template-rows: 1fr;
-  width: 100%;
   grid-gap: 20px;
   grid-template-columns: 1fr 1fr;
+  width: 100%;
   min-height: 100%;
   height: max-content;
   background: red;
   padding: 60px;
   box-sizing: border-box;
-  background-image: radial-gradient(50% 100%, #104492 50%, #0F3467 100%);
-}
+  background-image: radial-gradient(50% 100%, #104492 50%, #0F3467 100%); }
   #global_wrap .global_section {
     display: flex;
     flex-direction: column;
@@ -58,7 +57,7 @@ body {
       border-radius: 0 0 12px 12px;
       overflow: hidden;
       overflow-x: auto;
-    }
+      overflow-y: auto; }
       #global_wrap .global_section .body_box #map_gps,
       #global_wrap .global_section .body_box #map {
         width: 100%;
@@ -87,5 +86,8 @@ body {
             letter-spacing: -0.06px;
             line-height: 40px;
             padding-left: 16px; }
+      #global_wrap .global_section .body_box.msg-info-body {
+        display: grid;
+        grid-template-rows: 1fr 1fr; }
 
 /*# sourceMappingURL=main.css.map */
