@@ -10,7 +10,9 @@ spl_autoload('RabbitMQ');
 actionPrepareQueues();
 function actionPrepareQueues()
 {
-
+    if(!$_COOKIE['PHPSESSID']) {
+        session_start();
+    }
     $rabbitMQ = new RabbitMQ();
     $exchangeName = 'testing.hw.messages';
     $queueName = $exchangeName . '.' . $_COOKIE['PHPSESSID'];
