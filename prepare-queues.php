@@ -16,7 +16,7 @@ function actionPrepareQueues()
     $queueName = $exchangeName . '.' . $_COOKIE['PHPSESSID'];
     $result = $rabbitMQ->createQueueAndBind(
         $queueName,
-        [$exchangeName => $queueName],
+        [$exchangeName => 'testing.hw.messages.#'],
         true,
         60
     );
