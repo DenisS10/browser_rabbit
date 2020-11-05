@@ -51,7 +51,6 @@ app.globalMethods = {
     updateMessageInformationTable: function (msg) {
         var rabbitMsgBox = $('#info_section').find('.rabbit-msg-box');
         rabbitMsgBox.html('<h2>RabbitMQ Message</h2>' + '<pre>' + JSON.stringify(msg, undefined, 4) + '</pre>');
-debugger;
         app.globalMethods.updateHumanReadingTable(msg.msg.tm, msg.msg.course, msg.msg.speed, msg.msg.sats, msg.imei, msg.msg.lat, msg.msg.lon);
     },
     initUnitData: function () {
