@@ -53,7 +53,7 @@ app.globalMethods = {
     },
     updateMessageInformationTable: function (msg) {
         var bodyBox = $('#info_section').find('.body_box');
-        bodyBox.html('<pre>' + JSON.stringify(msg) + '</pre>');
+        bodyBox.html('<pre>' + JSON.stringify(msg, undefined, 4) + '</pre>');
     }
 };
 app.globalVariables = {
