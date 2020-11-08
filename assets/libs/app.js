@@ -64,6 +64,9 @@ app.globalMethods = {
         });
     },
     updateHumanReadingTable: function (time, course, speed, sats, imei, lat, lon) {
+        if(!time || !course || !speed || !sats || !imei || !lat || !lon){
+            return false;
+        }
         var $table = $('#additional_info');
         $table.find('.datetime').find('td')
             .html(new Date(parseInt(time.toString() + '000')).toLocaleString("ru-RU")

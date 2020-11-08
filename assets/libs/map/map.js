@@ -295,6 +295,9 @@ MapGlobal.createMarker = function (lat, lon) {
     if (this.marker) {
         this.marker.removeFrom(MapGlobal.map);
     }
+    if(!lat || !lon){
+        return false;
+    }
     var icon_path = '/assets/img/ufo.png';
     var icon = L.icon({iconUrl: icon_path, iconSize: [32, 32], iconAnchor: [12, 12]});
     this.marker = L.marker([lat, lon], {

@@ -6,7 +6,7 @@
 
     <!-- CSS -->
     <link href="assets/libs/reset/reset.css" rel="stylesheet">
-    <link href="assets/css/main.css" rel="stylesheet">
+    <link href="assets/css/main.css?v=<?=filemtime(__DIR__ . '/assets/css/main.css'); ?>" rel="stylesheet">
     <link href="assets/css/media.css" rel="stylesheet">
     <link href="assets/libs/lib/leaflet/leaflet.css" rel="stylesheet">
         
@@ -28,8 +28,8 @@
 <link rel="stylesheet" href="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.css"/>
 <script src="assets/libs/lib/leaflet-polyline-measure/Leaflet.PolylineMeasure.js"></script>
 <script type="text/javascript" src="node_modules/webstomp-client/dist/webstomp.min.js"></script>
-<script src="assets/libs/app.js" type="text/javascript"></script>
-<script src="assets/libs/map/map.js" type="text/javascript"></script>
+<script src="assets/libs/app.js?v=<?=filemtime(__DIR__ . '/assets/libs/app.js'); ?>" type="text/javascript"></script>
+<script src="assets/libs/map/map.js?v=<?=filemtime(__DIR__ . '/assets/libs/map/map.js'); ?>" type="text/javascript"></script>
 
 <section id="global_wrap">
     <section id="gps_section" class="global_section">
