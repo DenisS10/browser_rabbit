@@ -64,6 +64,10 @@
                         <th>Course:</th>
                         <td></td>
                     </tr>
+                    <tr class="speed">
+                        <th>Speed:</th>
+                        <td></td>
+                    </tr>
                     <tr class="imei">
                         <th>Imei:</th>
                         <td></td>
