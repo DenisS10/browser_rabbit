@@ -64,7 +64,7 @@ app.globalMethods = {
         });
     },
     updateHumanReadingTable: function (time, course, speed, sats, imei, lat, lon) {
-        if(!time || !course || !speed || !sats || !imei || !lat || !lon){
+        if(!time || course === null || speed === null || sats === null || !imei || !lat || !lon){
             return false;
         }
         var $table = $('#additional_info');
