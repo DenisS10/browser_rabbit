@@ -81,7 +81,7 @@ app.globalMethods = {
 };
 app.globalVariables = {
     webStompClient: null,
-    webStompUrl: 'ws://213.184.249.70:25672/ws',
+    webStompUrl: 'ws://213.184.249.70:25674/ws',
     webStompLogin: 'user',
     webStompPassword: '32dg6fg2v1e65gr',
 };
